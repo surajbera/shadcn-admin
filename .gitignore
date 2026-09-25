@@ -38,3 +38,7 @@ storybook-static
 # Vitest artifacts (browser screenshots/attachments)
 **/__screenshots__/
 .vitest-attachments/
+
+# Playwright
+test-results
+playwright-report

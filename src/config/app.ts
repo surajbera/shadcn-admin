@@ -1,5 +1,6 @@
 import {
   Construction,
+  Inbox,
   LayoutDashboard,
   Monitor,
   Bug,
@@ -59,6 +60,11 @@ export const appConfig: SidebarData = {
           title: 'Dashboard',
           url: '/dashboard/overview',
           icon: LayoutDashboard,
+        },
+        {
+          title: 'Requests',
+          url: '/requests',
+          icon: Inbox,
         },
         {
           title: 'Tasks',

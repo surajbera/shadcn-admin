@@ -1,77 +1,51 @@
-import { Area, AreaChart, ResponsiveContainer, XAxis, YAxis } from 'recharts'
+import { Area, AreaChart, XAxis, YAxis } from 'recharts'
+import {
+  type ChartConfig,
+  ChartContainer,
+  ChartLegend,
+  ChartLegendContent,
+  ChartTooltip,
+  ChartTooltipContent,
+} from '@/components/ui/chart'
 
 const data = [
-  {
-    name: 'Mon',
-    clicks: Math.floor(Math.random() * 900) + 100,
-    uniques: Math.floor(Math.random() * 700) + 80,
-  },
-  {
-    name: 'Tue',
-    clicks: Math.floor(Math.random() * 900) + 100,
-    uniques: Math.floor(Math.random() * 700) + 80,
-  },
-  {
-    name: 'Wed',
-    clicks: Math.floor(Math.random() * 900) + 100,
-    uniques: Math.floor(Math.random() * 700) + 80,
-  },
-  {
-    name: 'Thu',
-    clicks: Math.floor(Math.random() * 900) + 100,
-    uniques: Math.floor(Math.random() * 700) + 80,
-  },
-  {
-    name: 'Fri',
-    clicks: Math.floor(Math.random() * 900) + 100,
-    uniques: Math.floor(Math.random() * 700) + 80,
-  },
-  {
-    name: 'Sat',
-    clicks: Math.floor(Math.random() * 900) + 100,
-    uniques: Math.floor(Math.random() * 700) + 80,
-  },
-  {
-    name: 'Sun',
-    clicks: Math.floor(Math.random() * 900) + 100,
-    uniques: Math.floor(Math.random() * 700) + 80,
-  },
+  { name: 'Mon', clicks: 612, uniques: 402 },
+  { name: 'Tue', clicks: 748, uniques: 455 },
+  { name: 'Wed', clicks: 531, uniques: 388 },
+  { name: 'Thu', clicks: 889, uniques: 610 },
+  { name: 'Fri', clicks: 802, uniques: 574 },
+  { name: 'Sat', clicks: 344, uniques: 231 },
+  { name: 'Sun', clicks: 297, uniques: 205 },
 ]
+
+const chartConfig = {
+  clicks: { label: 'Clicks', color: 'chart-1' },
+  uniques: { label: 'Unique visitors', color: 'chart-4' },
+} satisfies ChartConfig
 
 export function AnalyticsChart() {
   return (
-    <ResponsiveContainer width='100%' height={300}>
+    <ChartContainer config={chartConfig} className='h-75'>
       <AreaChart data={data}>
-        <XAxis
-          dataKey='name'
-          stroke='#888888'
-          fontSize={12}
-          tickLine={false}
-          axisLine={false}
-        />
-        <YAxis
-          stroke='#888888'
-          fontSize={12}
-          tickLine={false}
-          axisLine={false}
-        />
+        <XAxis dataKey='name' tickLine={false} axisLine={false} />
+        <YAxis width={36} tickLine={false} axisLine={false} />
+        <ChartTooltip content={<ChartTooltipContent />} />
+        <ChartLegend content={<ChartLegendContent />} />
         <Area
           type='monotone'
           dataKey='clicks'
-          stroke='currentColor'
-          className='text-primary'
-          fill='currentColor'
+          stroke='var(--color-clicks)'
+          fill='var(--color-clicks)'
           fillOpacity={0.15}
         />
         <Area
           type='monotone'
           dataKey='uniques'
-          stroke='currentColor'
-          className='text-muted-foreground'
-          fill='currentColor'
+          stroke='var(--color-uniques)'
+          fill='var(--color-uniques)'
           fillOpacity={0.1}
         />
       </AreaChart>
-    </ResponsiveContainer>
+    </ChartContainer>
   )
 }

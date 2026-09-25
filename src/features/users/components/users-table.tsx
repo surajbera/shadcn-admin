@@ -75,6 +75,8 @@ export function UsersTable({ data, search, navigate }: DataTableProps) {
       columnVisibility,
     },
     enableRowSelection: true,
+    // Page lives in the URL; see requests-table.tsx.
+    autoResetPageIndex: false,
     onPaginationChange,
     onColumnFiltersChange,
     onRowSelectionChange: setRowSelection,

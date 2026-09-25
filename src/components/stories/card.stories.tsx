@@ -42,7 +42,7 @@ export const Metrics: Story = {
             <span
               className={
                 m.alert
-                  ? 'text-xs text-destructive'
+                  ? 'text-xs text-destructive-strong'
                   : 'text-xs text-muted-foreground'
               }
             >

@@ -22,9 +22,20 @@
   --accent: oklch(0.955 0.003 286.3);
   --accent-foreground: oklch(0.21 0.006 285.9);
   --destructive: oklch(0.577 0.215 27.3);
+  --destructive-foreground: oklch(0.985 0 0);
   --success: oklch(0.56 0.13 155);
+  --success-foreground: oklch(0.985 0 0);
   --warning: oklch(0.64 0.15 65);
+  --warning-foreground: oklch(0.2 0.03 65);
+  --info: var(--primary);
+  --info-foreground: var(--primary-foreground);
+  /* Status text on tinted surfaces (badges, alerts, errors): AA contrast */
+  --destructive-strong: oklch(0.5 0.19 27);
+  --success-strong: oklch(0.45 0.11 155);
+  --warning-strong: oklch(0.48 0.12 60);
+  --info-strong: oklch(from var(--primary) 0.48 c h);
   --border: oklch(0.915 0.004 286.3);
+  --border-strong: oklch(0.85 0.006 286.3);
   --input: oklch(0.9 0.005 286.3);
   --ring: var(--primary);
   --chart-1: var(--primary);
@@ -41,6 +52,14 @@
   --sidebar-accent-foreground: oklch(from var(--primary) 0.42 c h);
   --sidebar-border: var(--border);
   --sidebar-ring: var(--ring);
+
+  /* Elevation: one shadow per role, never raw shadow-* in components */
+  --elevation-control: 0 1px 2px 0 oklch(0 0 0 / 5%);
+  --elevation-overlay:
+    0 10px 15px -3px oklch(0 0 0 / 10%), 0 4px 6px -4px oklch(0 0 0 / 10%);
+  --elevation-modal:
+    0 20px 25px -5px oklch(0 0 0 / 10%), 0 8px 10px -6px oklch(0 0 0 / 10%);
+  --scrim: oklch(0 0 0 / 40%);
 }
 
 .dark {
@@ -59,8 +78,16 @@
   --accent-foreground: oklch(0.975 0.002 286);
   --destructive: oklch(0.68 0.18 22);
   --success: oklch(0.72 0.14 155);
+  --destructive-foreground: oklch(0.985 0 0);
   --warning: oklch(0.78 0.14 70);
+  --warning-foreground: oklch(0.2 0.03 70);
+  --success-foreground: oklch(0.16 0.03 155);
   --border: oklch(1 0 0 / 9%);
+  --border-strong: oklch(1 0 0 / 18%);
+  --destructive-strong: oklch(0.78 0.14 22);
+  --success-strong: oklch(0.8 0.13 155);
+  --warning-strong: oklch(0.84 0.12 75);
+  --info-strong: oklch(from var(--primary) 0.8 calc(c * 0.8) h);
   --input: oklch(1 0 0 / 14%);
   --chart-2: oklch(from var(--primary) 0.74 calc(c * 0.75) h);
   --chart-3: oklch(from var(--primary) 0.5 calc(c * 0.5) h);
@@ -69,6 +96,92 @@
   --sidebar: var(--background);
   --sidebar-accent: oklch(from var(--primary) 0.28 0.05 h);
   --sidebar-accent-foreground: oklch(from var(--primary) 0.86 0.06 h);
+
+  --elevation-control: 0 1px 2px 0 oklch(0 0 0 / 30%);
+  --elevation-overlay:
+    0 10px 15px -3px oklch(0 0 0 / 40%), 0 4px 6px -4px oklch(0 0 0 / 30%);
+  --elevation-modal:
+    0 20px 25px -5px oklch(0 0 0 / 50%), 0 8px 10px -6px oklch(0 0 0 / 40%);
+  --scrim: oklch(0 0 0 / 60%);
+}
+
+/*
+  Theme-independent scales. Components use the named roles below
+  (z-overlay, duration-base, shadow-modal, text-title...) instead of raw numbers.
+*/
+:root {
+  --z-sticky: 10;
+  --z-raised: 20;
+  --z-overlay: 50;
+  --z-toast: 100;
+
+  --duration-fast: 150ms;
+  --duration-base: 200ms;
+  --duration-slow: 300ms;
+  --duration-slower: 500ms;
+}
+
+@utility z-sticky {
+  z-index: var(--z-sticky);
+}
+@utility z-raised {
+  z-index: var(--z-raised);
+}
+@utility z-overlay {
+  z-index: var(--z-overlay);
+}
+@utility z-toast {
+  z-index: var(--z-toast);
+}
+@utility duration-fast {
+  --tw-duration: var(--duration-fast);
+  transition-duration: var(--duration-fast);
+}
+@utility duration-base {
+  --tw-duration: var(--duration-base);
+  transition-duration: var(--duration-base);
+}
+@utility duration-slow {
+  --tw-duration: var(--duration-slow);
+  transition-duration: var(--duration-slow);
+}
+@utility duration-slower {
+  --tw-duration: var(--duration-slower);
+  transition-duration: var(--duration-slower);
+}
+
+@theme {
+  --ease-standard: cubic-bezier(0.2, 0, 0, 1);
+  --ease-emphasized: cubic-bezier(0.3, 0, 0, 1);
+
+  /* Semantic type roles: size, line height, weight and tracking in one class */
+  --text-hero: 7rem;
+  --text-hero--line-height: 1.25;
+  --text-hero--font-weight: 700;
+  --text-display: 1.875rem;
+  --text-display--line-height: 2.25rem;
+  --text-display--font-weight: 600;
+  --text-display--letter-spacing: -0.025em;
+  --text-title: 1.25rem;
+  --text-title--line-height: 1.75rem;
+  --text-title--font-weight: 600;
+  --text-title--letter-spacing: -0.025em;
+  --text-heading: 0.875rem;
+  --text-heading--line-height: 1.25rem;
+  --text-heading--font-weight: 600;
+  --text-heading--letter-spacing: -0.025em;
+  --text-body: 0.875rem;
+  --text-body--line-height: 1.25rem;
+  --text-caption: 0.75rem;
+  --text-caption--line-height: 1rem;
+  --text-micro: 0.625rem;
+  --text-micro--line-height: 0.875rem;
+
+  /* Layout spacing roles: p-page, gap-section, p-card... */
+  --spacing-page: 1.5rem;
+  --spacing-section: 2rem;
+  --spacing-card: 1.25rem;
+  --spacing-stack: 1rem;
 }
 
 @theme inline {
@@ -77,6 +190,7 @@
   --font-inter: 'Inter', 'sans-serif';
   --font-manrope: 'Manrope', 'sans-serif';
 
+  --radius-xs: calc(var(--radius) - 6px);
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
@@ -98,9 +212,23 @@
   --color-accent: var(--accent);
   --color-accent-foreground: var(--accent-foreground);
   --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
   --color-success: var(--success);
+  --color-success-foreground: var(--success-foreground);
   --color-warning: var(--warning);
+  --color-warning-foreground: var(--warning-foreground);
+  --color-info: var(--info);
+  --color-info-foreground: var(--info-foreground);
+  --color-destructive-strong: var(--destructive-strong);
+  --color-success-strong: var(--success-strong);
+  --color-warning-strong: var(--warning-strong);
+  --color-info-strong: var(--info-strong);
   --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
+  --color-scrim: var(--scrim);
+  --shadow-control: var(--elevation-control);
+  --shadow-overlay: var(--elevation-overlay);
+  --shadow-modal: var(--elevation-modal);
   --color-input: var(--input);
   --color-ring: var(--ring);
   --color-chart-1: var(--chart-1);

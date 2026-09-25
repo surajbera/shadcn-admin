@@ -22,9 +22,9 @@ export const RequestFilters: Story = {
   render: () => (
     <div className='flex flex-wrap items-end gap-3'>
       <div className='grid gap-1.5'>
-        <Label>Regulation</Label>
+        <Label htmlFor='regulation'>Regulation</Label>
         <Select defaultValue='gdpr'>
-          <SelectTrigger className='w-44'>
+          <SelectTrigger id='regulation' className='w-44'>
             <SelectValue />
           </SelectTrigger>
           <SelectContent>
@@ -46,9 +46,9 @@ export const RequestFilters: Story = {
         </Select>
       </div>
       <div className='grid gap-1.5'>
-        <Label>Request type</Label>
+        <Label htmlFor='request-type'>Request type</Label>
         <Select>
-          <SelectTrigger className='w-44'>
+          <SelectTrigger id='request-type' className='w-44'>
             <SelectValue placeholder='All types' />
           </SelectTrigger>
           <SelectContent>

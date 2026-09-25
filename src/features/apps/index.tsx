@@ -1,8 +1,15 @@
 import { type ChangeEvent, useState } from 'react'
 import { getRouteApi } from '@tanstack/react-router'
-import { SlidersHorizontal, ArrowUpAZ, ArrowDownAZ } from 'lucide-react'
+import {
+  SlidersHorizontal,
+  ArrowUpAZ,
+  ArrowDownAZ,
+  SearchX,
+} from 'lucide-react'
 import { Button } from '@/components/ui/button'
+import { EmptyState } from '@/components/ui/empty-state'
 import { Input } from '@/components/ui/input'
+import { PageHeader } from '@/components/ui/page-header'
 import {
   Select,
   SelectContent,
@@ -93,14 +100,10 @@ export function Apps() {
 
       {/* ===== Content ===== */}
       <Main fixed>
-        <div>
-          <h1 className='text-2xl font-bold tracking-tight'>
-            App Integrations
-          </h1>
-          <p className='text-muted-foreground'>
-            Here&apos;s a list of your apps for the integration!
-          </p>
-        </div>
+        <PageHeader
+          title='App Integrations'
+          description="Here's a list of your apps for the integration!"
+        />
         <div className='my-4 flex items-end justify-between sm:my-0 sm:items-center'>
           <div className='flex flex-col gap-4 sm:my-4 sm:flex-row'>
             <Input
@@ -144,6 +147,28 @@ export function Apps() {
           </Select>
         </div>
         <Separator className='shadow-sm' />
+        {filteredApps.length === 0 && (
+          <EmptyState
+            className='mt-4'
+            icon={<SearchX />}
+            title='No apps match your filters'
+            description='Try a different name, or show all apps.'
+            action={
+              <Button
+                variant='outline'
+                onClick={() => {
+                  handleTypeChange('all')
+                  setSearchTerm('')
+                  navigate({
+                    search: (prev) => ({ ...prev, filter: undefined }),
+                  })
+                }}
+              >
+                Clear filters
+              </Button>
+            }
+          />
+        )}
         <ul className='faded-bottom no-scrollbar grid gap-4 overflow-auto pt-4 pb-16 md:grid-cols-2 lg:grid-cols-3'>
           {filteredApps.map((app) => (
             <li
@@ -165,8 +190,8 @@ export function Apps() {
                 </Button>
               </div>
               <div>
-                <h2 className='mb-1 font-semibold'>{app.name}</h2>
-                <p className='line-clamp-2 text-gray-500'>{app.desc}</p>
+                <h2 className='mb-1 text-heading'>{app.name}</h2>
+                <p className='line-clamp-2 text-muted-foreground'>{app.desc}</p>
               </div>
             </li>
           ))}

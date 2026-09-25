@@ -23,7 +23,7 @@ export const usersColumns: ColumnDef<User>[] = [
       />
     ),
     meta: {
-      className: cn('inset-s-0 z-10 rounded-tl-[inherit] max-md:sticky'),
+      className: cn('inset-s-0 z-sticky rounded-ss-[inherit] max-md:sticky'),
     },
     cell: ({ row }) => (
       <Checkbox

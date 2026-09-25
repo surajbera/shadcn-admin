@@ -1,8 +1,14 @@
+import {
+  type ColumnDef,
+  getCoreRowModel,
+  useReactTable,
+} from '@tanstack/react-table'
 import type { Meta, StoryObj } from '@storybook/react-vite'
-import { MoreHorizontal } from 'lucide-react'
+import { Inbox, MoreHorizontal } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Checkbox } from '@/components/ui/checkbox'
+import { EmptyState } from '@/components/ui/empty-state'
 import {
   Table,
   TableBody,
@@ -11,6 +17,7 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
+import { DataTableView } from '@/components/data-table'
 
 const meta = {
   title: 'Primitives/Table',
@@ -101,7 +108,9 @@ export const RequestQueue: Story = {
             <TableHead>Owner</TableHead>
             <TableHead>Due</TableHead>
             <TableHead>Status</TableHead>
-            <TableHead className='w-10' />
+            <TableHead className='w-10'>
+              <span className='sr-only'>Actions</span>
+            </TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -152,4 +161,57 @@ export const RequestQueue: Story = {
       </Table>
     </div>
   ),
+}
+
+type Row = (typeof requests)[number]
+
+const viewColumns: ColumnDef<Row>[] = [
+  { accessorKey: 'id', header: 'Request' },
+  { accessorKey: 'subject', header: 'Subject' },
+  { accessorKey: 'regulation', header: 'Regulation' },
+  { accessorKey: 'due', header: 'Due' },
+  {
+    accessorKey: 'status',
+    header: 'Status',
+    cell: ({ row }) => (
+      <Badge variant={tone[row.original.status]} dot>
+        {row.original.status}
+      </Badge>
+    ),
+  },
+]
+
+function ViewDemo({ loading, rows }: { loading?: boolean; rows: Row[] }) {
+  // eslint-disable-next-line react-hooks/incompatible-library
+  const table = useReactTable({
+    data: rows,
+    columns: viewColumns,
+    getCoreRowModel: getCoreRowModel(),
+  })
+  return (
+    <DataTableView
+      className='max-w-4xl'
+      table={table}
+      loading={loading}
+      empty={
+        <EmptyState
+          variant='plain'
+          icon={<Inbox />}
+          title='No requests yet'
+          description='Requests from your intake form land here.'
+          action={<Button>New request</Button>}
+        />
+      }
+    />
+  )
+}
+
+/** `DataTableView` while the query is pending: skeleton rows, same frame. */
+export const ViewLoading: Story = {
+  render: () => <ViewDemo loading rows={requests} />,
+}
+
+/** `DataTableView` with no rows: pass an `EmptyState variant='plain'`. */
+export const ViewEmpty: Story = {
+  render: () => <ViewDemo rows={[]} />,
 }

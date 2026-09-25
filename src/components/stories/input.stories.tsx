@@ -38,7 +38,9 @@ export const RequestIntake: Story = {
       <div className='grid gap-1.5'>
         <Label htmlFor='invalid'>Verification code</Label>
         <Input id='invalid' defaultValue='48A1' aria-invalid />
-        <p className='text-xs text-destructive'>Code must be 6 digits.</p>
+        <p className='text-xs text-destructive-strong'>
+          Code must be 6 digits.
+        </p>
       </div>
     </div>
   ),

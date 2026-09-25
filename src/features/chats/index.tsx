@@ -17,6 +17,7 @@ import {
 import { cn, getDisplayNameInitials } from '@/lib/utils'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
+import { EmptyState } from '@/components/ui/empty-state'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { Separator } from '@/components/ui/separator'
 import { ConfigDrawer } from '@/components/config-drawer'
@@ -80,7 +81,7 @@ export function Chats() {
             <div className='sticky top-0 z-10 -mx-4 bg-background px-4 pb-3 shadow-md sm:static sm:z-auto sm:mx-0 sm:p-0 sm:shadow-none'>
               <div className='flex items-center justify-between py-2'>
                 <div className='flex gap-2'>
-                  <h1 className='text-2xl font-bold'>Inbox</h1>
+                  <h1 className='text-title'>Inbox</h1>
                   <MessagesSquare size={20} />
                 </div>
 
@@ -100,7 +101,10 @@ export function Chats() {
                   'flex h-10 w-full items-center space-x-0 rounded-md border border-border ps-2'
                 )}
               >
-                <SearchIcon size={15} className='me-2 stroke-slate-500' />
+                <SearchIcon
+                  size={15}
+                  className='me-2 stroke-muted-foreground'
+                />
                 <span className='sr-only'>Search</span>
                 <input
                   type='text'
@@ -239,8 +243,8 @@ export function Chats() {
                                 className={cn(
                                   'chat-box max-w-72 px-3 py-2 wrap-break-word shadow-lg',
                                   msg.sender === 'You'
-                                    ? 'self-end rounded-[16px_16px_0_16px] bg-primary/90 text-primary-foreground/75'
-                                    : 'self-start rounded-[16px_16px_16px_0] bg-muted'
+                                    ? 'self-end rounded-2xl rounded-ee-none bg-primary/90 text-primary-foreground/75'
+                                    : 'self-start rounded-2xl rounded-es-none bg-muted'
                                 )}
                               >
                                 {msg.message}{' '}
@@ -323,20 +327,17 @@ export function Chats() {
                 'absolute inset-0 start-full z-50 hidden w-full flex-1 flex-col justify-center rounded-md border bg-card shadow-xs sm:static sm:z-auto sm:flex'
               )}
             >
-              <div className='flex flex-col items-center space-y-6'>
-                <div className='flex size-16 items-center justify-center rounded-full border-2 border-border'>
-                  <MessagesSquare className='size-8' />
-                </div>
-                <div className='space-y-2 text-center'>
-                  <h1 className='text-xl font-semibold'>Your messages</h1>
-                  <p className='text-sm text-muted-foreground'>
-                    Send a message to start a chat.
-                  </p>
-                </div>
-                <Button onClick={() => setCreateConversationDialog(true)}>
-                  Send message
-                </Button>
-              </div>
+              <EmptyState
+                variant='plain'
+                icon={<MessagesSquare />}
+                title='Your messages'
+                description='Send a message to start a chat.'
+                action={
+                  <Button onClick={() => setCreateConversationDialog(true)}>
+                    Send message
+                  </Button>
+                }
+              />
             </div>
           )}
         </section>

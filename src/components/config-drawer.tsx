@@ -1,5 +1,4 @@
 import { type SVGProps } from 'react'
-import { Root as Radio, Item } from '@radix-ui/react-radio-group'
 import { CircleCheck, RotateCcw, Settings } from 'lucide-react'
 import { IconDir } from '@/assets/custom/icon-dir'
 import { IconLayoutCompact } from '@/assets/custom/icon-layout-compact'
@@ -16,6 +15,10 @@ import { useDirection } from '@/context/direction-provider'
 import { type Collapsible, useLayout } from '@/context/layout-provider'
 import { useTheme } from '@/context/theme-provider'
 import { Button } from '@/components/ui/button'
+import {
+  RadioGroupRoot as Radio,
+  RadioGroupItemBase as Item,
+} from '@/components/ui/radio-group'
 import {
   Sheet,
   SheetContent,
@@ -137,7 +140,7 @@ function RadioGroupItem({
     >
       <div
         className={cn(
-          'relative rounded-[6px] ring-[1px] ring-border',
+          'relative rounded-sm ring-1 ring-border',
           'group-data-[state=checked]:shadow-2xl group-data-[state=checked]:ring-primary',
           'group-focus-visible:ring-2'
         )}

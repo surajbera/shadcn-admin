@@ -1,0 +1,40 @@
+import { Meta } from '@storybook/addon-docs/blocks'
+
+<Meta title='Guide/Introduction' />
+
+# Design system
+
+Product screens are built from three layers. Each layer only depends on the one below it.
+
+| Layer          | Where                                            | Rule                                                             |
+| -------------- | ------------------------------------------------ | ---------------------------------------------------------------- |
+| **Tokens**     | `src/styles/theme.css`                           | The only place raw values (colors, shadows, radii, timing) live. |
+| **Primitives** | `src/components/ui`, `src/components/data-table` | Consume tokens. Expose `variant` and `size`, not styling props.  |
+| **Products**   | `src/features/*`                                 | Compose primitives. No raw values.                               |
+
+## Importing
+
+```tsx
+import { Button } from '@/components/ui/button'
+import { PageHeader } from '@/components/ui/page-header'
+import { DataTableView } from '@/components/data-table'
+```
+
+Import each primitive from its own file. Patterns such as the data table come from `@/components/data-table`.
+
+## Enforced by lint
+
+`npm run lint` fails on:
+
+- Arbitrary visual values: `bg-[#fff]`, `rounded-[13px]`, `z-[60]`, `text-[11px]`
+- Raw palette colors: `text-red-500`, `bg-slate-900`
+- Importing `@radix-ui/*` outside `src/components/ui`
+
+Layout arbitraries (`w-[...]`, `grid-cols-[...]`) are allowed. If you need a value that has no token, add the token to `theme.css`. Don't disable the rule.
+
+## Checking your work in Storybook
+
+- **Theme** toolbar: every story renders in light and dark.
+- **Direction** toolbar: check RTL. Use logical classes (`ms-`, `pe-`, `inset-s-`, `rounded-ss-`), not `ml-` / `left-`.
+- **Accessibility** panel: axe runs on every story. Violations fail `npm run test:storybook`.
+- **Visual regression**: `npm run test:visual` compares screenshots of every story.

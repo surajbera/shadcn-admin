@@ -15,9 +15,7 @@ export function SignUp() {
     <AuthLayout>
       <Card className='max-w-sm gap-4'>
         <CardHeader>
-          <CardTitle className='text-lg tracking-tight'>
-            Create an account
-          </CardTitle>
+          <CardTitle className='text-title'>Create an account</CardTitle>
           <CardDescription>
             Enter your email and password to create an account. <br />
             Already have an account?{' '}

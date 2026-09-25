@@ -1,82 +1,49 @@
-import { Bar, BarChart, ResponsiveContainer, XAxis, YAxis } from 'recharts'
+import { Bar, BarChart, XAxis, YAxis } from 'recharts'
+import {
+  type ChartConfig,
+  ChartContainer,
+  ChartTooltip,
+  ChartTooltipContent,
+} from '@/components/ui/chart'
 
 const data = [
-  {
-    name: 'Jan',
-    total: Math.floor(Math.random() * 5000) + 1000,
-  },
-  {
-    name: 'Feb',
-    total: Math.floor(Math.random() * 5000) + 1000,
-  },
-  {
-    name: 'Mar',
-    total: Math.floor(Math.random() * 5000) + 1000,
-  },
-  {
-    name: 'Apr',
-    total: Math.floor(Math.random() * 5000) + 1000,
-  },
-  {
-    name: 'May',
-    total: Math.floor(Math.random() * 5000) + 1000,
-  },
-  {
-    name: 'Jun',
-    total: Math.floor(Math.random() * 5000) + 1000,
-  },
-  {
-    name: 'Jul',
-    total: Math.floor(Math.random() * 5000) + 1000,
-  },
-  {
-    name: 'Aug',
-    total: Math.floor(Math.random() * 5000) + 1000,
-  },
-  {
-    name: 'Sep',
-    total: Math.floor(Math.random() * 5000) + 1000,
-  },
-  {
-    name: 'Oct',
-    total: Math.floor(Math.random() * 5000) + 1000,
-  },
-  {
-    name: 'Nov',
-    total: Math.floor(Math.random() * 5000) + 1000,
-  },
-  {
-    name: 'Dec',
-    total: Math.floor(Math.random() * 5000) + 1000,
-  },
+  { name: 'Jan', total: 4120 },
+  { name: 'Feb', total: 3380 },
+  { name: 'Mar', total: 5210 },
+  { name: 'Apr', total: 2790 },
+  { name: 'May', total: 4630 },
+  { name: 'Jun', total: 3950 },
+  { name: 'Jul', total: 5480 },
+  { name: 'Aug', total: 4310 },
+  { name: 'Sep', total: 2640 },
+  { name: 'Oct', total: 3870 },
+  { name: 'Nov', total: 5020 },
+  { name: 'Dec', total: 4490 },
 ]
+
+const chartConfig = {
+  total: { label: 'Revenue', color: 'chart-1' },
+} satisfies ChartConfig
+
+const currency = (value: number) => `$${value.toLocaleString()}`
 
 export function Overview() {
   return (
-    <ResponsiveContainer width='100%' height={350}>
+    <ChartContainer config={chartConfig} className='h-88'>
       <BarChart data={data}>
-        <XAxis
-          dataKey='name'
-          stroke='#888888'
-          fontSize={12}
-          tickLine={false}
-          axisLine={false}
-        />
+        <XAxis dataKey='name' tickLine={false} axisLine={false} />
         <YAxis
           direction='ltr'
-          stroke='#888888'
-          fontSize={12}
           tickLine={false}
           axisLine={false}
-          tickFormatter={(value) => `$${value}`}
+          tickFormatter={currency}
         />
-        <Bar
-          dataKey='total'
-          fill='currentColor'
-          radius={[4, 4, 0, 0]}
-          className='fill-primary'
+        <ChartTooltip
+          cursor
+          content={<ChartTooltipContent valueFormatter={currency} />}
         />
+        <Bar dataKey='total' fill='var(--color-total)' radius={[4, 4, 0, 0]} />
       </BarChart>
-    </ResponsiveContainer>
+    </ChartContainer>
   )
 }

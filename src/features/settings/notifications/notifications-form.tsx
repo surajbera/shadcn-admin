@@ -94,7 +94,7 @@ export function NotificationsForm() {
           )}
         />
         <div className='relative'>
-          <h3 className='mb-4 text-lg font-medium'>Email Notifications</h3>
+          <h3 className='mb-4 text-heading'>Email Notifications</h3>
           <div className='space-y-4'>
             <FormField
               control={form.control}

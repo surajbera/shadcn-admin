@@ -1,0 +1,44 @@
+import { Meta } from '@storybook/addon-docs/blocks'
+
+<Meta title='Guide/Usage rules' />
+
+# Usage rules
+
+## Tokens
+
+| Need             | Do                                                                 | Don't                               |
+| ---------------- | ------------------------------------------------------------------ | ----------------------------------- |
+| Page title       | `<PageHeader title=… />` or `text-title`                           | `text-2xl font-bold tracking-tight` |
+| Section title    | `<Section title=… />` or `text-heading`                            | `text-sm font-semibold`             |
+| Secondary text   | `text-caption text-muted-foreground`                               | `text-xs text-gray-500`             |
+| Status color     | `text-success`, `bg-warning/15`, `Badge variant`                   | `text-green-600`                    |
+| Floating surface | primitive (`Popover`, `Sheet`) → `shadow-overlay` / `shadow-modal` | `shadow-2xl`, `shadow-[…]`          |
+| Stacking         | `z-sticky`, `z-raised`, `z-overlay`, `z-toast`                     | `z-[999]`                           |
+| Motion           | `duration-fast` … `duration-slower`, `ease-standard`               | `duration-[250ms]`                  |
+| Corners          | `rounded-sm` … `rounded-2xl` (derived from `--radius`)             | `rounded-[6px]`                     |
+
+## Components
+
+**Button**: one primary button per view. Use `outline` for secondary, `ghost` for toolbar and tertiary actions, and `destructive` only for the confirm step of a destructive flow.
+
+**Sizes**: `sm`, `default` and `lg` mean the same heights (28, 32 and 36 px) on `Button`, `Input` and `SelectTrigger`. Controls in one row share one size.
+
+**Sheet vs Dialog**: use a Sheet to create or edit a record while the list stays visible. Use a Dialog to confirm something or for short, blocking input.
+
+**EmptyState**: always include an action or tell the user what happens next. "No data" alone is a dead end.
+
+**Forms**: use `react-hook-form` with `FormField` + `FormItem` so labels, hints and errors come from the schema.
+
+**DataTableView**: render every TanStack table through it so every list gets the same header, row and empty-state styling.
+
+**Select vs Combobox**: `Select` for a short fixed list (up to about 7). `Combobox` when people need to search: assignees, systems, languages.
+
+**StatCard**: one figure per card, 2 to 4 in a row. The hint says what the number covers ("In the last 30 days"), not just "vs last week".
+
+**Charts**: wrap Recharts in `ChartContainer` and give each series a `chart-*` color in `ChartConfig`. Fill or stroke with `var(--color-<key>)`. Never pass hex colors; the container already styles axes, grid and tooltip.
+
+**Progress**: one tone. Say what the number means with a `Badge` next to it ("3 days overdue"), not by recoloring the bar.
+
+## Changing the brand
+
+Edit the semantic variables in `src/styles/theme.css` (`--primary`, `--radius`, `--elevation-*`…). Every primitive follows. Never restyle a primitive from product code by overriding its classes.

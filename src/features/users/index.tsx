@@ -1,4 +1,5 @@
 import { getRouteApi } from '@tanstack/react-router'
+import { PageHeader } from '@/components/ui/page-header'
 import { ConfigDrawer } from '@/components/config-drawer'
 import { Header } from '@/components/layout/header'
 import { Main } from '@/components/layout/main'
@@ -27,15 +28,11 @@ export function Users() {
       </Header>
 
       <Main className='flex flex-1 flex-col gap-4 sm:gap-6'>
-        <div className='flex flex-wrap items-end justify-between gap-2'>
-          <div>
-            <h2 className='text-2xl font-bold tracking-tight'>User List</h2>
-            <p className='text-muted-foreground'>
-              Manage your users and their roles here.
-            </p>
-          </div>
-          <UsersPrimaryButtons />
-        </div>
+        <PageHeader
+          title='User List'
+          description='Manage your users and their roles here.'
+          actions={<UsersPrimaryButtons />}
+        />
         <UsersTable data={users} search={search} navigate={navigate} />
       </Main>
 

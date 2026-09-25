@@ -15,9 +15,7 @@ export function ForgotPassword() {
     <AuthLayout>
       <Card className='max-w-sm gap-4 sm:min-w-sm'>
         <CardHeader>
-          <CardTitle className='text-lg tracking-tight'>
-            Forgot Password
-          </CardTitle>
+          <CardTitle className='text-title'>Forgot Password</CardTitle>
           <CardDescription>
             Enter your registered email and <br /> we will send you a link to
             reset your password.

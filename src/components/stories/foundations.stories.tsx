@@ -20,39 +20,60 @@ const signals = [
   { name: 'success', className: 'bg-success', use: 'Completed' },
   { name: 'warning', className: 'bg-warning', use: 'Due soon' },
   { name: 'destructive', className: 'bg-destructive', use: 'Overdue, delete' },
+  { name: 'info', className: 'bg-info', use: 'Neutral notice' },
 ]
 
 const typeScale = [
   {
-    role: 'Page title',
-    className: 'text-xl font-semibold tracking-tight',
-    sample: 'Data subject requests',
-  },
-  {
-    role: 'Section title',
-    className: 'text-sm font-semibold tracking-tight',
-    sample: 'Requests due this week',
-  },
-  {
-    role: 'Key figure',
-    className: 'text-3xl font-semibold tracking-tight tabular-nums',
+    role: 'text-display',
+    className: 'text-display tabular-nums',
     sample: '1,284',
   },
   {
-    role: 'Body, row, control',
-    className: 'text-sm',
+    role: 'text-title',
+    className: 'text-title',
+    sample: 'Data subject requests',
+  },
+  {
+    role: 'text-heading',
+    className: 'text-heading',
+    sample: 'Requests due this week',
+  },
+  {
+    role: 'text-body',
+    className: 'text-body',
     sample: 'Access request from anna.berg@northwind.eu',
   },
   {
-    role: 'Meta, hint',
-    className: 'text-xs text-muted-foreground',
+    role: 'text-caption',
+    className: 'text-caption text-muted-foreground',
     sample: 'Received 12 Sep · GDPR Art. 15',
   },
   {
-    role: 'Record ID',
-    className: 'font-mono text-xs',
+    role: 'font-mono text-caption',
+    className: 'font-mono text-caption',
     sample: 'DSR-20418',
   },
+]
+
+const elevations = [
+  { name: 'shadow-control', className: 'shadow-control', use: 'Button, input' },
+  { name: 'shadow-overlay', className: 'shadow-overlay', use: 'Menu, popover' },
+  { name: 'shadow-modal', className: 'shadow-modal', use: 'Dialog, sheet' },
+]
+
+const layers = [
+  { name: 'z-sticky', value: '10', use: 'Sticky headers, table columns' },
+  { name: 'z-raised', value: '20', use: 'Sidebar rail, floating bars' },
+  { name: 'z-overlay', value: '50', use: 'Dialogs, sheets, popovers, menus' },
+  { name: 'z-toast', value: '100', use: 'Toasts, always on top' },
+]
+
+const motion = [
+  { name: 'duration-fast', value: '150ms', use: 'Hover, color' },
+  { name: 'duration-base', value: '200ms', use: 'Dialogs, collapses' },
+  { name: 'duration-slow', value: '300ms', use: 'Sheet close' },
+  { name: 'duration-slower', value: '500ms', use: 'Sheet open' },
 ]
 
 const radii = [
@@ -60,6 +81,7 @@ const radii = [
   { name: 'Floating', className: 'rounded-xl', use: 'Menu, popover, alert' },
   { name: 'Control', className: 'rounded-lg', use: 'Button, input, tabs' },
   { name: 'Item', className: 'rounded-md', use: 'Menu item, tab, nav' },
+  { name: 'Inner', className: 'rounded-sm', use: 'Checkbox, close button' },
   { name: 'Pill', className: 'rounded-full', use: 'Badge, avatar' },
 ]
 
@@ -130,8 +152,44 @@ export const Overview: Story = {
           ))}
         </div>
       </Section>
+      <Section title='Elevation'>
+        <div className='grid grid-cols-3 gap-6'>
+          {elevations.map((e) => (
+            <div key={e.name} className='grid gap-2'>
+              <div className={`h-16 rounded-xl bg-card ${e.className}`} />
+              <span className='font-mono text-caption'>{e.name}</span>
+              <span className='text-caption text-muted-foreground'>
+                {e.use}
+              </span>
+            </div>
+          ))}
+        </div>
+      </Section>
+      <Section title='Layers and motion'>
+        <div className='grid grid-cols-2 gap-6'>
+          {[layers, motion].map((rows, i) => (
+            <div
+              key={i}
+              className='grid divide-y rounded-2xl bg-card ring-1 ring-foreground/[0.07]'
+            >
+              {rows.map((r) => (
+                <div
+                  key={r.name}
+                  className='grid grid-cols-[8rem_4rem_1fr] gap-3 px-4 py-3 text-caption'
+                >
+                  <span className='font-mono'>{r.name}</span>
+                  <span className='text-muted-foreground tabular-nums'>
+                    {r.value}
+                  </span>
+                  <span className='text-muted-foreground'>{r.use}</span>
+                </div>
+              ))}
+            </div>
+          ))}
+        </div>
+      </Section>
       <Section title='Radius'>
-        <div className='grid grid-cols-5 gap-4'>
+        <div className='grid grid-cols-6 gap-4'>
           {radii.map((r) => (
             <div key={r.name} className='grid gap-2'>
               <div

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { getPageNumbers } from './utils'
+import { getPageNumbers } from './page-numbers'
 
 describe('getPageNumbers', () => {
   it('returns all pages when total is at most 5', () => {

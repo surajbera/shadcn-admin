@@ -4,7 +4,7 @@ import { cva, type VariantProps } from 'class-variance-authority'
 import { cn } from '@/lib/utils'
 
 const badgeVariants = cva(
-  'inline-flex items-center justify-center rounded-md border px-2 py-0.5 text-xs font-medium w-fit whitespace-nowrap shrink-0 [&>svg]:size-3 gap-1 [&>svg]:pointer-events-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive transition-[color,box-shadow] overflow-hidden',
+  'inline-flex h-5 items-center justify-center rounded-full border px-2 text-xs font-medium w-fit whitespace-nowrap shrink-0 [&>svg]:size-3 gap-1 [&>svg]:pointer-events-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive transition-[color,box-shadow] overflow-hidden',
   {
     variants: {
       variant: {
@@ -16,6 +16,11 @@ const badgeVariants = cva(
           'border-transparent bg-destructive text-white [a&]:hover:bg-destructive/90 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 dark:bg-destructive/60',
         outline:
           'text-foreground [a&]:hover:bg-accent [a&]:hover:text-accent-foreground',
+        neutral: 'border-transparent bg-muted text-muted-foreground',
+        info: 'border-transparent bg-primary/10 text-primary',
+        success: 'border-transparent bg-success/12 text-success',
+        warning: 'border-transparent bg-warning/15 text-warning',
+        danger: 'border-transparent bg-destructive/10 text-destructive',
       },
     },
     defaultVariants: {
@@ -27,18 +32,28 @@ const badgeVariants = cva(
 function Badge({
   className,
   variant,
+  dot = false,
   asChild = false,
+  children,
   ...props
 }: React.ComponentProps<'span'> &
-  VariantProps<typeof badgeVariants> & { asChild?: boolean }) {
+  VariantProps<typeof badgeVariants> & { asChild?: boolean; dot?: boolean }) {
   const Comp = asChild ? Slot : 'span'
 
   return (
     <Comp
       data-slot='badge'
-      className={cn(badgeVariants({ variant }), className)}
+      className={cn(badgeVariants({ variant }), dot && 'ps-1.5', className)}
       {...props}
-    />
+    >
+      {dot && !asChild && (
+        <span
+          aria-hidden='true'
+          className='size-1.5 shrink-0 rounded-full bg-current'
+        />
+      )}
+      {children}
+    </Comp>
   )
 }
 

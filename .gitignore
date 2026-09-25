@@ -32,6 +32,9 @@ dist-ssr
 # Test coverage
 /coverage
 
+# Storybook
+storybook-static
+
 # Vitest artifacts (browser screenshots/attachments)
 **/__screenshots__/
 .vitest-attachments/

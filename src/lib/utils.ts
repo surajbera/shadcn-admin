@@ -1,5 +1,16 @@
 import { type ClassValue, clsx } from 'clsx'
-import { twMerge } from 'tailwind-merge'
+import { extendTailwindMerge } from 'tailwind-merge'
+
+// The type roles in theme.css (text-body, text-caption...) are font sizes.
+// Without this, tailwind-merge reads them as colors and drops `text-caption`
+// from `cn('text-caption', 'text-muted-foreground')`.
+const twMerge = extendTailwindMerge({
+  extend: {
+    theme: {
+      text: ['hero', 'display', 'title', 'heading', 'body', 'caption', 'micro'],
+    },
+  },
+})
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))

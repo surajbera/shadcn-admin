@@ -1,0 +1,113 @@
+import { Markdown, Meta } from '@storybook/addon-docs/blocks'
+
+<Meta title='Guide/Product catalog' />
+
+# Product catalog
+
+Every control and pattern the DataSafeguard product (`idp-ui`) needs, mapped to the one component that does the job in this design system.
+
+The mapping carries **behavior only**: what a control does, such as submitting a request, versioning a consent form, filtering a queue or uploading evidence. Nothing visual comes from the product. There are no product screenshots, class names or colors here, and none were copied into the components.
+
+## Why one system
+
+Today the product styles the same screens with Tailwind and Ant Design at once, and adds another library for jobs Ant Design already covers: a second select, a second date picker, a second table and pagination, and Chart.js next to Recharts. The same behavior (a button, an empty state, a modal, a filter) looks different from one screen to the next.
+
+Here each behavior has one component. There is one radius scale, one type scale and one status treatment: `Badge` and `Alert`, nothing else. Tokens come from `src/styles/theme.css` only.
+
+## How to read the tables
+
+Rows are grouped by kind. A **primitive** is one control in `src/components/ui`. A **compound** is a pattern built from primitives.
+
+- **Here**: what to import in this repo.
+- **Story**: where to see it working, in light, dark and right-to-left.
+- **In idp-ui**: where the behavior lives in the product today, so every row can be traced back.
+
+## Covered by existing components
+
+### Primitives
+
+<Markdown>
+  {`
+| Behavior | Here | Story | In idp-ui |
+| --- | --- | --- | --- |
+| Button | \`Button\` | [Primitives/Button](?path=/story/primitives-button--hierarchy) | \`components/Button/Button.js\` |
+| Text field | \`Input\`, \`Textarea\` | [Primitives/Input](?path=/story/primitives-input--request-intake) | \`components/TextInput/index.js\` |
+| Checkbox | \`Checkbox\` | [Primitives/Selection](?path=/story/primitives-selection--verification-method) | \`components/Checkbox/Checkbox.js\` |
+| Switch | \`Switch\` | [Primitives/Selection](?path=/story/primitives-selection--consent-purposes) | \`components/Toggle/ToggleButton.jsx\` |
+| Select from a short list | \`Select\` | [Primitives/Select](?path=/story/primitives-select--request-filters) | \`components/Dropdown/Dropdown.js\`<br />\`components/CustomDropdown/CustomDropdown.js\` |
+| Select with search | \`Combobox\` | [Primitives/Pickers](?path=/story/primitives-pickers--combobox-states) | \`components/VirtualizedSelect.jsx\`<br />\`components/CMP/CMPModal.js\` |
+| Date | \`DatePicker\` | [Primitives/Pickers](?path=/story/primitives-pickers--date-picker-states) | \`components/CalendarInput/DatepicketInput.js\`<br />\`components/PIADashboard/FilterPIADashboard.jsx\` |
+| Tabs | \`Tabs\` | [Primitives/Tabs](?path=/story/primitives-tabs--consent-views) | \`components/DsarForm/DiscoverySourceTabs.js\`<br />\`components/PIA_V2/Mitigation-Tracker/MitigationMain.jsx\` |
+| Modal with a summary | \`Dialog\` | [Primitives/Dialog](?path=/story/primitives-dialog--scan-summary) | \`components/Modal/Modal.js\`<br />\`components/Modal/UCMSummaryModal.js\` |
+| Side panel | \`Sheet\` | [Primitives/Overlay](?path=/story/primitives-overlay--assign-owner) | \`components/PIATemplateBuilder/DashboardPiaTemplateBuilder.jsx\`<br />\`components/PIA_V2/AI/FileAIInsight.jsx\` |
+| Accordion | \`Collapsible\` | [Primitives/Misc](?path=/story/primitives-misc--disclosed-systems) | \`components/Accordian/Accordian.js\`<br />\`components/DSARConfiguration/DSARAccordian.js\` |
+| One-time code | \`InputOTP\` | [Primitives/OTP](?path=/story/primitives-otp--verify-subject) | \`components/OTP/OTPInputComponent.jsx\`<br />\`pages/loginotp.js\` |
+| Empty state | \`EmptyState\` | [Layout/Primitives](?path=/story/layout-primitives--empty-in-panel) | \`components/NoRecords/NoRecords.js\` |
+| Loading placeholder | \`Skeleton\`, \`loading\` props | [Primitives/Misc](?path=/story/primitives-misc--loading) | \`components/Table/components/SkeletonLoader.jsx\`<br />\`components/Loading/Loading.js\` |
+| Toast | \`toast\`, \`Toaster\` | [Primitives/Toast](?path=/story/primitives-toast--states) | \`src/utils/toasters.js\` |
+| Form fields and errors | \`Form\`, \`FormField\` | [Primitives/Form](?path=/story/primitives-form--discovery-job) | \`components/submitDsar/SubmitDSAR.jsx\` |
+| Popover | \`Popover\` | [Primitives/Overlay](?path=/story/primitives-overlay--row-actions) | \`components/Popover/Popover.js\` |
+| Row menu | \`DropdownMenu\` | [Primitives/Overlay](?path=/story/primitives-overlay--row-actions) | \`components/MoreOption/moreOption.js\` |
+| Breadcrumbs | \`Breadcrumb\` | [Primitives/Breadcrumb](?path=/story/primitives-breadcrumb--on-a-detail-screen) | \`components/BreadCrumbs/Breadcrumbs.js\` |
+`}
+</Markdown>
+
+### Compounds
+
+<Markdown>
+  {`
+| Behavior | Here | Story | In idp-ui |
+| --- | --- | --- | --- |
+| Stats | \`StatCard\` | [Patterns/Metrics](?path=/story/patterns-metrics--privacy-overview) | \`components/Stats/dsgstats.js\` |
+| Charts | \`ChartContainer\` | [Patterns/Metrics](?path=/story/patterns-metrics--privacy-overview) | \`components/DataEcosystem/PieChart.jsx\`<br />\`components/UCMDashboard/Components/CookieAnalytics.jsx\` |
+| Table with sort, filters and pages | \`DataTableView\`<br />\`DataTableToolbar\`<br />\`DataTablePagination\`<br />\`DataTableBulkActions\` | [Patterns/Data table](?path=/story/patterns-data-table--consent-records) | \`components/Table/Table.jsx\`<br />\`components/Table/hooks/useTableFilters.js\`<br />\`components/Table/components/Pagination.jsx\` |
+| Confirm | \`ConfirmDialog\` | [Patterns/Confirm](?path=/story/patterns-confirm--destructive) | \`components/DeleteModal/DeleteModal.js\`<br />\`components/submitDsar/commonComponents/dsarConfirmModal.jsx\` |
+| Create or edit a record | \`Sheet\` with \`Form\` | [Patterns/Form sheet](?path=/story/patterns-form-sheet--edit-purpose) | \`components/Users/UserInviteModal.jsx\`<br />\`components/ConsentsConfig/ConsentDetailPage.jsx\` |
+| Dashboard filters | \`Input\`, \`Select\`, \`DatePicker\` | [Patterns/Filter bar](?path=/story/patterns-filter-bar--dashboard) | \`components/PIADashboard/FilterPIADashboard.jsx\` |
+`}
+</Markdown>
+
+## New in this pass
+
+The product had these behaviors and the design system did not. Each is built from existing primitives and tokens, with no new dependency.
+
+### File upload
+
+Primitive · `FileUpload` from `@/components/ui/file-upload` · [Patterns/File upload](?path=/story/patterns-file-upload--evidence-upload)
+
+A drop zone with a browse button on a native file input. It takes `accept`, `multiple` and `maxSize`, and lists each file with its size, upload progress, a reason when it is rejected or fails, and a remove button. It works from the keyboard, and focus stays in the list after a remove. Inside `FormControl` it picks up the label and the error.
+
+In idp-ui: assessment attachments (`components/PIA_V2/UploadFile.jsx`), request evidence (`components/DSAR details/AttachmentTab.jsx`), the redaction source file (`components/SelectSource/Individual_Files.js`) and identity documents (`components/submitDsar/commonComponents/uploadImage.jsx`).
+
+### Stepper
+
+Primitive · `Stepper` from `@/components/ui/stepper` · [Patterns/Stepper](?path=/story/patterns-stepper--request-intake)
+
+Horizontal steps that are complete, current or upcoming, with an optional description. The current step has `aria-current="step"`. With `onStepClick`, completed steps become buttons so people can go back. Later steps can never be skipped to.
+
+In idp-ui: the cookie banner builder (`components/DCBConsole/CreateBanner/Layout.jsx`), the assessment template builder (`components/PIATemplateBuilder/NavigationTabs.jsx`) and product installation (`components/ProductInstallation/Installation/WorkflowSteps.js`).
+
+### Version history
+
+Compound · `VersionHistory` from `@/components/version-history` · [Patterns/Version history](?path=/story/patterns-version-history--consent-versions)
+
+Saved versions of a record, newest first, each with its label, author, time and status: draft, published or active, shown as a `Badge`. Each row has a menu with View, Download and Restore; Restore is not offered on the active version. It has loading, empty and read-only states and fits in a panel or a `Sheet`.
+
+In idp-ui: `components/common/VersionHistorySidebar.jsx`, used by consent lists (`components/ConsentsConfig/ConsentDetailPage.jsx`) and cookie banners (`components/DCBConsole/CreateBanner/CreateBanner.jsx`).
+
+## Composed, not new
+
+Filter bars, confirmations and create/edit sheets already exist as behavior, so there is no new `FilterBar`, `Confirm` or `FormSheet` component. The pattern stories compose `Input`, `Select`, `DatePicker`, `ConfirmDialog`, `Sheet` and `Form` instead.
+
+## Not in this demo
+
+These product behaviors are listed so the scope is clear. They are not built in this pass.
+
+- **Captcha**: `components/Captcha/CaptchaComponents.js`, `components/OTP/Captcha.jsx`
+- **Phone number input**: `components/submitDsar/SubmitDSAR.jsx`
+- **Maps**: `components/UCMDashboard/Components/Map.jsx`
+- **Color picker**: `components/DCBConsole/CreateBanner/Components/CreateNewTemplateComponent.jsx`
+- **Drag-and-drop reorder**: `pages/piadashboard.js`
+- **Virtualized grids**: `components/DataEcosystem/DataTableVirtual.jsx`, `components/Report/RedactionDB.js`
+- **Document preview**: `components/PIA_V2/FilePreview.jsx`, `components/Report/PDFViewer.js`, `components/Report/DOCViewer.js`
+- **Full module screens**: the assessment template builder (`components/PIATemplateBuilder/TemplateBuilder.jsx`), the cookie banner console (`components/DCBConsole/`) and the request submission wizard (`components/submitDsar/SubmitDSAR.jsx`)

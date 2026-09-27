@@ -49,7 +49,7 @@ export function DataTablePagination<TData>({
               table.setPageSize(Number(value))
             }}
           >
-            <SelectTrigger className='h-8 w-17.5'>
+            <SelectTrigger className='h-8 w-17.5' aria-label='Rows per page'>
               <SelectValue placeholder={table.getState().pagination.pageSize} />
             </SelectTrigger>
             <SelectContent side='top'>
